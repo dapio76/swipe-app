@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Swipe & Rate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1>Swipe <span>&amp;</span> Rate</h1>
+      </div>
+      <div class="stats">
+        <div class="stat stat-like">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span id="count-like">0</span>
+        </div>
+        <div class="stat stat-dislike">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span id="count-dislike">0</span>
+        </div>
+        <div class="stat stat-fav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span id="count-fav">0</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Card Stack -->
+    <main class="card-area">
+      <div class="card-stack" id="cardStack">
+        <div class="loading-state" id="loadingState">
+          <div class="spinner"></div>
+          <p>Bilder werden geladen…</p>
+        </div>
+      </div>
+
+      <!-- Swipe direction indicators -->
+      <div class="direction-hint hint-left" id="hintLeft">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        Nein
+      </div>
+      <div class="direction-hint hint-right" id="hintRight">
+        Ja
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </div>
+      <div class="direction-hint hint-down" id="hintDown">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Favorit
+      </div>
+    </main>
+
+    <!-- Action Buttons -->
+    <div class="action-row">
+      <button class="action-btn btn-dislike" id="btnDislike" aria-label="Ablehnen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <button class="action-btn btn-fav" id="btnFav" aria-label="Favorit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      </button>
+      <button class="action-btn btn-like" id="btnLike" aria-label="Mögen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </button>
+    </div>
+
+    <!-- Swipe Guide (shown once) -->
+    <div class="swipe-guide">
+      <span class="guide-item"><span class="guide-arrow">←</span> Ablehnen</span>
+      <span class="guide-item"><span class="guide-arrow">↓</span> Favorit</span>
+      <span class="guide-item"><span class="guide-arrow">→</span> Mögen</span>
+    </div>
+
+    <!-- Favorites -->
+    <section class="favorites-section">
+      <h2>Favoriten <span id="favCount" class="fav-count-badge">0</span></h2>
+      <div class="fav-grid" id="favGrid">
+        <div class="fav-empty">Noch keine Favoriten</div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="" />
+    <p id="lightboxCaption"></p>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
